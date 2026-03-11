@@ -41,7 +41,7 @@ try:
     with open("Data/shopping_list.txt", "r") as file:
         message = file.read()
 
-    kit.sendwhatmsg_instantly("+421951717455", message)
+    kit.sendwhatmsg_instantly("+xxxxx", message)
 except FileNotFoundError as error:
     print("Sorry, something went wrong. Try again later.")
 
