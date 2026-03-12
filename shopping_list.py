@@ -1,10 +1,11 @@
 print("Hi there, welcome to the shopping list")
 
 shopping_list = {}
-status = input("Type 'NEW' for new Shopping List or Type 'C' to add items to the existing Shopping List: ").strip().lower()
+status = input("Type 'NEW' for new Shopping List or Type 'ADD' to add items to the existing Shopping List: ").strip().lower()
 
 while True:
-    item_to_buy = input("What are you planning to buy? Enter: ")
+    item_to_buy = input("What are you planning to buy? Enter an Item name or type 'done' to finish."
+                        "\nProduct: ")
     if item_to_buy.strip().lower() == "done":
         break
 
@@ -22,7 +23,7 @@ while True:
 
 if status == "new":
     mode = "w"
-elif status == "c":
+elif status == "add":
     mode = "a"
 else:
     print("Invalid option chosen. New Shopping List will be created.")
@@ -33,17 +34,17 @@ with open("Data/shopping_list.txt", mode) as file:
     if mode == "w":
         file.write("SHOPPING LIST:\n\n")
     for i, (product, quantity) in enumerate(shopping_list.items(), start=1):
-        print(f"{i}. {product}: {quantity}")
+        print(f"{i}. {product.capitalize()}: {quantity}")
         file.write(f"{i}. {product}: {quantity}\n")
 
-import pywhatkit as kit
-try:
-    with open("Data/shopping_list.txt", "r") as file:
-        message = file.read()
-
-    kit.sendwhatmsg_instantly("+xxxxx", message)
-except FileNotFoundError as error:
-    print("Sorry, something went wrong. Try again later.")
+# import pywhatkit as kit
+#
+# try:
+#     with open("Data/shopping_list.txt", "r") as file:
+#         message = file.read()
+#     kit.sendwhatmsg_instantly("+421951717455", message, wait_time=10, tab_close=True)
+# except FileNotFoundError:
+#     print("Sorry, something went wrong. Try again later.")
 
 
 
