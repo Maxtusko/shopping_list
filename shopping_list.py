@@ -1,5 +1,20 @@
 print("Hi there, welcome to the shopping list")
 
+try:
+    with open("Data/shopping_list.txt", "r") as file:
+        print("Following items are on the list so far:")
+        next(file, None)  # safely skip first line
+
+        items = [line.strip() for line in file if line.strip()]
+
+        if not items:
+            print("No items are on the list.")
+        else:
+            for item in items:
+                print(item)
+except FileNotFoundError:
+    print("Shopping list file not found.")
+
 shopping_list = {}
 status = input("Type 'NEW' for new Shopping List or Type 'ADD' to add items to the existing Shopping List: ").strip().lower()
 
