@@ -26,7 +26,6 @@ def parse_line(line: str):
 
     return None, None
 
-
 # for line in existing_items:
 #     product, quantity = parse_line(line)
 
@@ -64,6 +63,8 @@ while True:
             if adjust in ("yes", "y"):
                 quantity = input("Enter new quantity: ")
                 shopping_list[item_to_buy] = quantity.upper()
+            else:
+                continue
     else:
         quantity = input("How many items do you want? Qs: ")
         shopping_list[item_to_buy.lower()] = quantity.upper()
