@@ -59,14 +59,6 @@ while True:
     shopping_list[item_to_buy.lower()] = quantity.upper()
 
 if status == "new":
-    mode = "w"
-elif status == "add":
-    mode = "a"
-else:
-    print("Invalid option chosen. New Shopping List will be created.")
-    mode = "w"
-
-if status == "new":
     with open(file_path, "w", encoding="utf-8") as file:
         file.write("**********SAVED SHOPPING LIST ITEMS**********\n")
         for i, (product, quantity) in enumerate(shopping_list.items(), start=1):
