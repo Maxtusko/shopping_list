@@ -23,12 +23,7 @@ def parse_line(line: str):
     if ":" in clean:
         product, quantity = clean.split(":", 1)
         return product.strip(), quantity.strip()
-
     return None, None
-
-# for line in existing_items:
-#     product, quantity = parse_line(line)
-
 
 shopping_list = {}
 
@@ -44,30 +39,24 @@ else:
 status = input(
     "Type 'NEW' for new Shopping List or Type 'ADD' to add items to the existing Shopping List: ").strip().lower()
 
-
 while True:
-    item_to_buy = input("What are you planning to buy? Enter an Item name or type 'done' to finish."
-                        "\nProduct: ")
+    item_to_buy = input("What are you planning to buy? Enter an Item name or type 'done' to finish.\nProduct: ")
     if item_to_buy.strip().lower() == "done":
         break
-
-    # for line in existing_items:
-    #     product, quantity = parse_line(line)
 
     for line in existing_items:
         product, quantity = parse_line(line)
         if item_to_buy == product:
             print(f"\nYou already have {item_to_buy.upper()} on the list. Actual amount: {quantity}\n")
+            # print(item_to_buy)
             adjust = input(f"Adjust the quantity for {item_to_buy.upper()}? (yes/no): ").strip().lower()
-
             if adjust in ("yes", "y"):
                 quantity = input("Enter new quantity: ")
-                shopping_list[item_to_buy] = quantity.upper()
-            else:
-                continue
-    else:
-        quantity = input("How many items do you want? Qs: ")
-        shopping_list[item_to_buy.lower()] = quantity.upper()
+                shopping_list[item_to_buy.lower()] = quantity.upper()
+            break
+
+    quantity = input("How many items do you want? Qs: ")
+    shopping_list[item_to_buy.lower()] = quantity.upper()
 
 if status == "new":
     mode = "w"
@@ -77,19 +66,29 @@ else:
     print("Invalid option chosen. New Shopping List will be created.")
     mode = "w"
 
-with open(file_path, mode) as file:
-    if mode == "w":
+if status == "new":
+    with open(file_path, "w", encoding="utf-8") as file:
         file.write("**********SAVED SHOPPING LIST ITEMS**********\n")
-    for i, (product, quantity) in enumerate(shopping_list.items(), start=1):
-        print(f"{i}. {product.capitalize()}: {quantity}")
-        file.write(f"{i}. {product}: {quantity}\n")
-print()
+        for i, (product, quantity) in enumerate(shopping_list.items(), start=1):
+            print(f"{i}. {product.capitalize()}: {quantity}")
+            file.write(f"{i}. {product}: {quantity}\n")
+elif status == "add":
+    with open(file_path, "a", encoding="utf-8") as file:
+        file.write("+++++ADDED ITEMS+++++\n")
+        for i, (product, quantity) in enumerate(shopping_list.items(), start=1):
+            print(f"{i}. {product.capitalize()}: {quantity}")
+            file.write(f"{i}. {product}: {quantity}\n")
+else:
+    print("Invalid option chosen. New Shopping List will be created.")
+
 
 # Print items for the user
 with open(file_path, "r") as file:
     for line in file:
         print(line.strip())
+print()
 
+# Send a shopping list to WhatsApp
 # import pywhatkit as kit
 #
 # try:
